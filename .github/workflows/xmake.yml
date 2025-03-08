@@ -1,0 +1,38 @@
+# This starter workflow is for a CMake project running on a single platform. There is a different starter workflow if you need cross-platform coverage.
+# See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-multi-platform.yml
+name: Build with XMake
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Debug
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
+    # You can convert this to a matrix build if you need cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Linux Deps
+      run: sudo apt update -y && sudo apt install -y libwayland-dev libxkbcommon-dev libx11-dev xserver-xorg-dev xorg-dev && wget https://xmake.io/shget.text -O - | bash
+      if: ${{ runner.os == 'Linux' }}
+    - name: Install MACXOS Deps
+      run: brew install xmake --HEAD
+      if: ${{ runner.os == 'macos' }}
+
+    - name: Configure xMake
+      run: xmake
