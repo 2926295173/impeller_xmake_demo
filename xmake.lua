@@ -5,6 +5,20 @@ set_project("impeller_demo")
 -- Impeller SDK 配置
 add_rules("mode.debug", "mode.release")
 
+-- 下载 Impeller SDK
+add_requires("impeller_sdk", {
+    system = false,
+    url = "https://storage.googleapis.com/flutter_infra_release/flutter/${IMPELLER_SDK_SHA}/${IMPELLER_PLATFORM}-${IMPELLER_ARCH}/impeller_sdk.zip",
+    configs = {
+        IMPELLER_SDK_SHA = "${IMPELLER_SDK_SHA}",
+        impeller_platform = "${IMPELLER_PLATFORM}",
+        impeller_arch = "${IMPELLER_ARCH}",
+    }
+})
+
+-- GLFW 配置
+add_requires("glfw 3.4", {system = false, url = "https://github.com/glfw/glfw/archive/refs/tags/3.4.tar.gz"})
+
 -- 定义平台和架构变量
 rule("impeller_sdk")
     on_load(function(target)
@@ -28,19 +42,6 @@ rule("impeller_sdk")
         target:set("IMPELLER_DYLIB", format("libimpeller.%s", get_plat() == "macosx" and "dylib" or (get_plat() == "windows" and "dll" or "so")))
     end)
 
--- 下载 Impeller SDK
-add_requires("impeller_sdk", {
-    system = false,
-    url = "https://storage.googleapis.com/flutter_infra_release/flutter/${IMPELLER_SDK_SHA}/${IMPELLER_PLATFORM}-${IMPELLER_ARCH}/impeller_sdk.zip",
-    configs = {
-        IMPELLER_SDK_SHA = "${IMPELLER_SDK_SHA}",
-        impeller_platform = "${IMPELLER_PLATFORM}",
-        impeller_arch = "${IMPELLER_ARCH}",
-    }
-})
-
--- GLFW 配置
-add_requires("glfw 3.4", {system = false, url = "https://github.com/glfw/glfw/archive/refs/tags/3.4.tar.gz"})
 
 -- 目标配置
 target("impeller_demo")
