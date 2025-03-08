@@ -21,6 +21,8 @@ rule("impeller_sdk")
         -- 设置平台和架构
         target:set("IMPELLER_PLATFORM", platform_map[get_plat()] or "unknown")
         target:set("IMPELLER_ARCH", arch_map[get_arch()] or "unknown")
+        target:set("IMPELLER_SDK_SHA", "b7c3af43f90ac9aaf66dbd10b922c25addd9c3db")
+
         
         -- 动态库名称设置
         target:set("IMPELLER_DYLIB", format("libimpeller.%s", get_plat() == "macosx" and "dylib" or (get_plat() == "windows" and "dll" or "so")))
@@ -29,11 +31,11 @@ rule("impeller_sdk")
 -- 下载 Impeller SDK
 add_requires("impeller_sdk", {
     system = false,
-    url = "https://storage.googleapis.com/flutter_infra_release/flutter/b7c3af43f90ac9aaf66dbd10b922c25addd9c3db/${IMPELLER_PLATFORM}-${IMPELLER_ARCH}/impeller_sdk.zip",
-    sha = "6b3a0c7c8f6e5d1a9a0c8b7e8c6d5e4f3a2b1a0", -- 替换实际sha值
+    url = "https://storage.googleapis.com/flutter_infra_release/flutter/${IMPELLER_SDK_SHA}/${IMPELLER_PLATFORM}-${IMPELLER_ARCH}/impeller_sdk.zip",
     configs = {
+        IMPELLER_SDK_SHA = "${IMPELLER_SDK_SHA}",
         impeller_platform = "${IMPELLER_PLATFORM}",
-        impeller_arch = "${IMPELLER_ARCH}"
+        impeller_arch = "${IMPELLER_ARCH}",
     }
 })
 
