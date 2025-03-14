@@ -72,5 +72,5 @@ FetchContent_MakeAvailable(glfw)
 # --- Setup Project ------------------------------------------------------------
 # ------------------------------------------------------------------------------
 
-add_executable(impeller_demo demo.c)
+add_executable(impeller_demo example_vk.c)
 target_link_libraries(impeller_demo glfw impeller)
