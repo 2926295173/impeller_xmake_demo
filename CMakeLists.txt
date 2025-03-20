@@ -13,12 +13,21 @@ set(IMPELLER_SDK_SHA d452d04a07f3c37d3ed60989e01e64e0f5c34913)
 if(CMAKE_HOST_APPLE)
   set(IMPELLER_PLATFORM darwin)
   set(IMPELLER_DYLIB libimpeller.dylib)
+  set(VULKAN_PLATFORM mac)
+  set(PACKAGE_FORMAT zip)
 elseif(CMAKE_HOST_LINUX)
   set(IMPELLER_PLATFORM linux)
   set(IMPELLER_DYLIB libimpeller.so)
+  set(VULKAN_PLATFORM linux)
+  set(PACKAGE_FORMAT tar.xz)
+
 elseif(CMAKE_HOST_WIN32)
   set(IMPELLER_PLATFORM windows)
   set(IMPELLER_DYLIB libimpeller.dll)
+  set(VULKAN_PLATFORM windows)
+  set(PACKAGE_FORMAT exe)
+
+
 else()
 message(FATAL_ERROR "Unsupported platform.")
 endif()
@@ -69,10 +78,20 @@ FetchContent_Declare(
   EXCLUDE_FROM_ALL
 )
 FetchContent_MakeAvailable(glfw)
+# curl -O https://sdk.lunarg.com/sdk/download/latest/PLATFORM/vulkan_sdk.[exe|tar.xz|zip]
+FetchContent_Declare(
+  vulkan
+  URL https://sdk.lunarg.com/sdk/download/latest/${VULKAN_PLATFORM}/vulkan_sdk.${PACKAGE_FORMAT}
+)
+FetchContent_MakeAvailable(vulkan)
+
+
+
+
 
 # ------------------------------------------------------------------------------
 # --- Setup Project ------------------------------------------------------------
 # ------------------------------------------------------------------------------
 
 add_executable(impeller_demo example_vk.c)
-target_link_libraries(impeller_demo glfw impeller)
+target_link_libraries(impeller_demo glfw vulkan impeller)
