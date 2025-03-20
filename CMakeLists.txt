@@ -28,7 +28,7 @@ if (CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
 elseif(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "x86_64")
   set(IMPELLER_ARCH x64)
 else()
-message(FATAL_ERROR "Unsupported architecture.")
+message(FATAL_ERROR "${CMAKE_HOST_SYSTEM_PROCESSOR} Unsupported architecture.")
 endif()
 
 message(NOTICE "Impeller SDK ${IMPELLER_SDK_SHA} for ${IMPELLER_PLATFORM}-${IMPELLER_ARCH} selected.")
