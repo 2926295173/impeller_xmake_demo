@@ -79,12 +79,12 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(glfw)
 # curl -O https://sdk.lunarg.com/sdk/download/latest/PLATFORM/vulkan_sdk.[exe|tar.xz|zip]
-FetchContent_Declare(
-  vulkan
-  URL https://sdk.lunarg.com/sdk/download/latest/${VULKAN_PLATFORM}/vulkan_sdk.${PACKAGE_FORMAT}
-  EXCLUDE_FROM_ALL
-)
-FetchContent_MakeAvailable(vulkan)
+## FetchContent_Declare(
+#  vulkan
+#  URL https://sdk.lunarg.com/sdk/download/latest/${VULKAN_PLATFORM}/vulkan_sdk.${PACKAGE_FORMAT}
+#  EXCLUDE_FROM_ALL
+#)
+## FetchContent_MakeAvailable(vulkan)
 
 
 # ------------------------------------------------------------------------------
@@ -92,4 +92,4 @@ FetchContent_MakeAvailable(vulkan)
 # ------------------------------------------------------------------------------
 
 add_executable(impeller_demo example_vk.c)
-target_link_libraries(impeller_demo glfw vulkan impeller)
+target_link_libraries(impeller_demo glfw impeller)
