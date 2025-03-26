@@ -82,11 +82,9 @@ FetchContent_MakeAvailable(glfw)
 FetchContent_Declare(
   vulkan
   URL https://sdk.lunarg.com/sdk/download/latest/${VULKAN_PLATFORM}/vulkan_sdk.${PACKAGE_FORMAT}
+  EXCLUDE_FROM_ALL
 )
 FetchContent_MakeAvailable(vulkan)
-
-
-
 
 
 # ------------------------------------------------------------------------------
